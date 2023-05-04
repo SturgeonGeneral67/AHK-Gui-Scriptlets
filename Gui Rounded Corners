@@ -1,0 +1,26 @@
+Gui, 
+    -Caption 
+    +hwndHGUI 
+    +LastFound
+Gui, Color, ABCDEF
+Gui, Font, s17 w600 q5 c123456, Calibri
+Gui, Margin, 15, 15
+Gui, Add, Text, w200 h100 Center +0x0200, Hello world! 	; +0x0200 to center vertically.
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Gui Shaping  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+Gui, Show, Hide
+WinGetPos, X, Y, W, H
+R := Min(W, H) // 5 			 ; <<<<-----  Set value to amount of cornering. (0.5=Oval, 0=square, 1= capsule, 5=rounded corners).
+WinSet, Region, 0-0 W%W% H%H% R%R%-%R%
+Gui, Show
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Shaping End  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+OnMessage(0x0201, "WM_LBUTTONDOWN")
+Return
+
+WM_LBUTTONDOWN() {
+   PostMessage, 0x00A1, 2, 0
+}
+
+GuiEscape:
+Reload
