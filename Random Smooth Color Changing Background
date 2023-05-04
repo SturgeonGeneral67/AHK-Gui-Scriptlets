@@ -1,0 +1,38 @@
+#SingleInstance, Force
+#NoEnv
+SetBatchLines, -1
+Text = Some text for contrast.
+Loop
+{
+	Random, Color, 0, 0xFFFFFF
+	IF IDOld := IDNew
+	{
+		VarSetCapacity(WH, 16)
+		DllCall("GetClientRect", "Ptr", IDNew, "Ptr", &WH)
+		NewWidth := NumGet(WH, 8, "Int")
+		NewHeight := NumGet(WH, 12, "Int")
+		WinGetPos, NewX, NewY,,, ahk_id %IDNew%
+		PosNew = X%NewX% Y%NewY% W%NewWidth% H%NewHeight%
+	}
+	Gui, New, +HwndIDNew
+	-Caption
+	+LastFound
+	+Resize
+	+ToolWindow
+	-DPIScale
+	Gui, Color,% Color
+	Gui, Margin, 10, 30
+	Gui, Font, s18 BOLD q5, Verdana
+	Gui, Add,Text,x22 y22 Center vText1 c000000 BackgroundTrans, % Text
+	Gui, Add,Text,x20 y20 Center vText2 cFFFF00 BackgroundTrans, % Text
+	Gui, Show, NoActivate %PosNew% 	 ; can swap out Noactivate for NA if desired.
+	WinSet, Transparent, 0, ahk_id %IDNew%
+	Gui, +AlwaysOnTop
+	Loop, 10
+	{
+		Sleep, 50
+		WinSet, Transparent,% A_Index*25.5, ahk_id %IDNew%
+	}
+	WinClose, ahk_id %IDOld%
+	Sleep, 2000
+}
