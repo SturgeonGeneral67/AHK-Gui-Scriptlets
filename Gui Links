@@ -1,0 +1,92 @@
+^T:: 	 ; (Ctrl+T)
+;
+GUI, Destroy
+;  ̶  ̶  ̶
+; 	* Read the saved positions or center if not previously saved.
+IniRead, gui_position, LINKS.ini, window position, gui_position, Center
+;  ̶  ̶  ̶
+
+Gui, 
+    +AlwaysOnTop 
+    -Caption
+    +HwndGuiHwnd ; <<<<-----  Centering
+    +Owner
+    -SysMenu 
+    +Hwndgui_id ; <<<<-----  Get the window's ID so you can get its position later.
+
+Gui, Color, ADADAD
+Gui, Margin, 10, 10
+Gui, Font, s8 w500 q5
+
+Gui, Add, Link, y+5, <a href="www.google.com">Google</a>
+Gui, Add, Link, y+5, <a href="https://weather.com/">Weather</a>
+
+
+Gui, Font, s6 w400 q5
+Gui, Add, GroupBox, y+15 w80 h50 , OUTS 	 ; <<<<-----  GROUPBOX<<<<-----  GROUPBOX
+
+Gui, Font, s6 w400 q5
+  Gui, Add, Text, y+10 cGREEN gReload, □ RELOAD Script □
+  Gui, Add, Text, y+3 cRED gExit, □ EXIT Script □
+;  Gui, Add, Text, y+3 cWHITE gBreak, □ Break Position □
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+Gui, Show, %gui_position% AutoSize NoActivate,  	 ; NoActivate avoids deactivating the currently active window, while gui_position places the window at the previously saved position.
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+enableGuiDrag() 			; - Add this after the Gui Show Command -
+
+return
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+uiMove:
+PostMessage, 0xA1, 2,,, A 
+Return
+
+Break:
+    Send {^}{End}
+Return
+
+Reload:
+    WinGetPos, gui_x, gui_y,,, ahk_id %gui_id%
+    IniWrite, x%gui_x% y%gui_y%, LINKS.ini, window position, gui_position
+Reload
+Return
+
+Exit:
+    WinGetPos, gui_x, gui_y,,, ahk_id %gui_id%
+    IniWrite, x%gui_x% y%gui_y%, LINKS.ini, window position, gui_position
+        ExitApp
+
+;^END::
+;    FileDelete, LINKS.ini
+
+;  ̶  ̶  ̶
+; 	* When you close the window, get its position and save it.
+GuiClose:
+    WinGetPos, gui_x, gui_y,,, ahk_id %gui_id%
+    IniWrite, x%gui_x% y%gui_y%, LINKS.ini, window position, gui_position
+;  ̶  ̶  ̶
+
+
+Sleep 29500 ; 29.5 seconds
+    Gui, Destroy ; Closes Popup window after sleep time.
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+; 	 - Add this toward the end of the script -
+
+enableGuiDrag(GuiLabel=1) {
+	WinGetPos,,,A_w,A_h,A
+	Gui, %GuiLabel%:Add, Text, x0 y0 w%A_w% h%A_h% +BackgroundTrans gGUI_Drag
+	return
+	
+	GUI_Drag:
+	SendMessage 0xA1,2  ;-- Goyyah/SKAN trick
+
+	;http://autohotkey.com/board/topic/80594-how-to-enable-drag-for-a-gui-without-a-titlebar
+
+	return
+}
