@@ -1,0 +1,23 @@
+; 	* Read the saved positions or center if not previously saved.
+IniRead, gui_position, ClosePosition.ini, window position, gui_position, Center
+;  ̶  ̶  ̶          ̶  ̶  ̶          ̶  ̶  ̶          ̶  ̶  ̶  
+; 	* Get the window's ID so you can get its position later.
+Gui, 
+    +Hwndgui_id 
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  	  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+Gui,
+   +AlwaysOnTop
+   +ToolWindow
+Gui, Color, 8000FF
+Gui, Show, %gui_position% w250 h100 		 ; Places the window at the previously saved position.
+
+Return
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+; 	* When you close the window, get its position and save it.
+GuiClose:
+    WinGetPos, gui_x, gui_y,,, ahk_id %gui_id%
+    IniWrite, x%gui_x% y%gui_y%, ClosePosition.ini, window position, gui_position
+        Reload
