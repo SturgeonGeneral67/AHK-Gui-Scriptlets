@@ -1,0 +1,43 @@
+The default Windows 10 Taskbar Height (40 pixels) plus the approximate
+; default window bottom border (decoration) thickness (~15 pixels).
+
+Taskbar := 55
+
+; Upper Left
+^F4:: WinMove, A, , 0, 0
+
+; Upper Right
+^F5::
+    WinGetPos, , , Width, Height, A
+    WinMove, A, , (A_ScreenWidth - Width), 0
+    Return
+
+; Lower Left (No Taskbar)
+;^F6::
+    WinGetPos, , , Width, Height, A
+    WinMove, A, , 0, (A_ScreenHeight - Height)
+    Return
+
+; Lower Left (With Taskbar)
+ ^F6::
+    ; WinGetPos, , , Width, Height, A
+    ; WinMove, A, , 0, (A_ScreenHeight - Height - Taskbar)
+    ; Return
+
+; Lower Right (No Taskbar)
+^F7::
+    WinGetPos, , , Width, Height, A
+    WinMove, A, , (A_ScreenWidth - Width), (A_ScreenHeight - Height)
+    Return
+
+; Lower Right (With Taskbar)
+; ^F7::
+    ; WinGetPos, , , Width, Height, A
+    ; WinMove, A, , (A_ScreenWidth - Width), (A_ScreenHeight - Height - Taskbar)
+    ; Return
+
+; Center the active window in the middle of the screen.
+^F8::
+    WinGetPos, , , Width, Height, A
+    WinMove, A, , (A_ScreenWidth/2)-(Width/2), (A_ScreenHeight/2)-(Height/2)
+    Return
