@@ -1,0 +1,40 @@
+^T:: 	 ; (Ctrl+T)
+
+; 	* https://www.autohotkey.com/board/topic/48458-keeping-gui-window-at-the-lower-right-corner-of-the-screen/
+; 				NEEDS TESTING TO DETERMINE MATH BEHIND RESIZE.
+
+Gui, Destroy
+Gui,
+    +AlwaysOnTop
+    -Border
+    -Caption
+    +E0x02000000 +E0x00080000 	 ; Double Buffer to prevent flicker.
+
+Gui, Color, GREEN
+Gui, Font, s12 w500 cBLUE
+Gui, Add, Text, Center , This should grow up from the`nbottom-right of the screen.
+Gui, Show, w1 h3		 ; Oiginal values = w200 h100
+
+incW=100 		 ; Original value = 200
+incH=200 			 ; Original value = 100
+
+Loop, 35 			 ; Original value = 25
+{
+	Sleep, 5 		 ; Original value = 150
+	incW += 4 		 ; Original value = 10
+	incH += 8 		 ; Original value = 5
+	Gui, Show, w%incW% h%incH% NA
+}
+Return
+
+GuiClose:
+    ExitApp
+Return
+
+GuiSize:
+	Gui, %A_Gui%: +LastFound
+	WinGetPos, x, y, w, h
+	x1 := A_ScreenWidth - (w + 5)
+	y1 := A_ScreenHeight - (h + 45) 	 ; Just above taskbar.
+	WinMove, x1, y1
+Return
