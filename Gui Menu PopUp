@@ -1,0 +1,97 @@
+^T::
+
+Gui,67:Destroy
+
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+;  Screens Dimmer
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Gui,67:
++AlwaysOnTop 
+-Caption 
++Owner 
+;+ToolWindow 
+
+
+Gui,67:Color, 000000 		 ; ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  ̶  ̶  ̶̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   About box color selection.
+Gui,67:Margin,15,20
+
+Gui,67:Font,Bold c299CCD
+Gui,67:Add, Text, x55 y+20, Screens Dimmer
+    Gui,67:Font, Normal c9ED5EC
+    Gui,67:Add, Text, x15 y+5, Adjustable Screen Dimmer For Up To 4 Monitors.
+
+Gui,67:Font, Bold c299CCD Underline
+Gui,67:Add, Text, y+5, Shortcut Keys
+    Gui,67:Font, Normal c299CCD
+    Gui,67:Add, Text, y+5, ( Ctrl+Shift+D ) . . . . . . . . . . . . . . . . . . . . . . . . Toggles monitor dimming On / Off.
+    Gui,67:Add, Text, y+5, ( Ctrl+Shift+WheelUp ) . . . . . . . . . . . . . . . . . . Dimming Increase.
+    Gui,67:Add, Text, y+5, ( Ctrl+Shift+WheelDown )  . . . . . . . . . . . . . . . Dimming Decrease.
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+;  AlwaysOnTop 2.0
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Gui,67:Font, Bold c35B274
+Gui,67:Add, Text, x55 y+10, AlwaysOnTop 2.0
+    Gui,67:Font, Normal cBCECD5
+    Gui,67:Add, Text, x15 y+5, Select the active window and toggle the window as always on top.
+    Gui,67:Add, Text, y+2, Works with multiple windows. Great for note taking, calcultor, etc.
+
+Gui,67:Font, Bold c35B274 Underline
+Gui,67:Add, Text, y+5, Shortcut Keys
+    Gui,67:Font, Normal c35B274
+    Gui,67:Add, Text, y+5, ( Ctrl+Shift+T ) . . . . . . . . . . . . . . . . . . . . . . . . Toggles AlwaysOnTop
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+;  NumLock / UnLock
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Gui,67:Font, Bold c299CCD
+Gui,67:Add, Text, x55 y+10, NumLock / UnLock
+    Gui,67:Font, Normal c9ED5EC
+    Gui,67:Add, Text, x15 y+5, Lock the NumLock key as always active and unlock when needed.
+    Gui,67:Add, Text, x15 y+2, NumLock set to always active by default.
+
+Gui,67:Font, Bold cc299CCD Underline
+Gui,67:Add, Text, y+5, Shortcut Keys
+    Gui,67:Font, Normal c299CCD
+    Gui,67:Add, Text, y+5, ( LCtrl+L ) . . . . . . . . . . . . . . . . . . . . . . . . . . . ←  LeftCtrl+L . . . . . . Lock
+    Gui,67:Add, Text, y+5, ( RCtrl+L ) . . . . . . . . . . . . . . . . . . . . . . . . . . . →  RightCtrl+L  . . . . Unlock
+
+
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+;  Signature Section
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Gui,67:Add, Picture, x265 y+25, %applicationname%.exe
+Gui,67:Font, s8 Calibri Italic
+Gui,67:Add, Text, cC4C4C4 y+10, Scripts For Improved...
+Gui,67:Add, Text, cC4C4C4 x300 y+5, • Ergonimics
+Gui,67:Add, Text, cC4C4C4 y+2, • Performance
+Gui,67:Add, Text, cC4C4C4 y+2, • Work Flow
+
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+;  Exit Script Section
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Gui,67:Font, Normal CRed Underline
+Gui,67:Add, Text, x15 y+2, Exit Entire Script
+Gui,67:Font
+    Gui,67:Add, Text, y+5, -   ( Ctrl+Esc )   -
+Gui,67:Font, Italic CRed
+Gui,67:Add, Text, x15 y+2, ( Emergency Exit )
+
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Shortcuts Menu Positioning
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+Gui,67:Show, , %applicationname% SHORTCUTS 	; Initial window postioning before WinGet repositions.
+
+; . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+WinGetPos X, Y, Width, Height, A
+MaxX := A_ScreenWidth - Width - 10 ; This will put the Gui to the right of the monitor...adjust the "10" value as needed.
+MaxY := A_ScreenHeight - Height - 65 ; This will put the Gui above the taskbar...adjust the "65" value as needed.
+
+WinMove A, ,%MaxX%, %MaxY%
+
+Return
