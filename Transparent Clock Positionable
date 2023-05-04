@@ -1,0 +1,66 @@
+; 		 Define your variables:
+GuiWidth := 130 ; adjust to fit your desired font - will be trickier with proportional fonts
+
+; 		 The positions below fit my particular needs. You can use fixed x and y rather than calculating.
+
+ClockPosX := (A_ScreenWidth - GuiWidth) / 1 -200	 ; Top right corner, minus 200 to offset away from window buttons.
+;ClockPosX := (A_ScreenWidth - GuiWidth) / 2 	 ; Center of screen in X-axis.
+ClockPosY := (A_ScreenHeight - 1080) 		 ; Top of 1080 screen in Y-axis, adjust as needed.
+
+OldTime := ""
+CustomColor := "000000"  ; Can be any RGB color, but I found this prevents character shadowing the best.
+TextColor1 := "YELLOW"
+;TextColor2 := "045B95"
+
+FontName := "Calibri"
+FontSize := 17
+
+; 		 Set up your GUI:
+Gui, 
+    +LastFound
+    +AlwaysOnTop
+    -Caption
+    +ToolWindow
+;    +Border
+Gui, Color, %CustomColor%
+Gui, Font, q5 s%FontSize%, %FontName%
+
+; 		 XX:XX:XX serves to auto-size the window.
+Gui, Add, Text, vMyTime1 c%TextColor1%, XX/XX/XX   XX:XX
+;Gui, Add, Text, vMyTime2 c%TextColor2%, XX/XX/XX   XX:XX
+
+
+; 		 Make all pixels of this color transparent and make the text itself translucent (150):
+WinSet, TransColor, %CustomColor% 255
+
+SetTimer, UpdateClock, 1000
+Gosub, UpdateClock 	 ; Make the first update immediate rather than waiting for the timer:
+
+; Display the clock
+; NoActivate avoids deactivating the currently active window.
+Gui, Show, x%ClockPosX% y%ClockPosY% w%GuiWidth% NoActivate  
+
+; make draggable
+enableGuiDrag()
+
+Return
+
+UpdateClock:
+FormatTime, CurTime,, hh:mm:ss
+If (CurTime != OldTime) {
+    OldTime := CurTime
+    GuiControl,, MyTime1, %CurTime%
+;    GuiControl,, MyTime2, %CurTime%
+}
+Return
+
+enableGuiDrag(GuiLabel=1) {
+	WinGetPos,,,A_w,A_h,A
+	Gui, %GuiLabel%:Add, Text, x0 y0 w%A_w% h%A_h% +BackgroundTrans gGUI_Drag
+	return
+	
+	GUI_Drag:
+	SendMessage 0xA1,2 	 ;-- Goyyah/SKAN trick
+; 		 http://autohotkey.com/board/topic/80594-how-to-enable-drag-for-a-gui-without-a-titlebar
+Return
+}
