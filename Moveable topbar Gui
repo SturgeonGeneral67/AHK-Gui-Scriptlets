@@ -1,0 +1,15 @@
+Gui, -Caption +ToolWindow +0x400000
+Gui, Margin, 0, 0
+Gui, Font, s14
+Gui, Add, Picture, w400 h16 Border Center GuiMove, Remove this text for blank bar..
+Gui, Add, Text, y+5 w398 h280 cRED Border, Added Text.
+Gui, Color, Blue
+Gui, Show, AutoSize
+Return
+
+uiMove:
+PostMessage, 0xA1, 2,,, A 
+Return
+
+GuiEscape:
+Exitapp
