@@ -1,0 +1,34 @@
+^T:: 	 ; (Ctrl+T)
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   Using multiple gui's and updating their variables:
+
+; 	 https://www.autohotkey.com/boards/viewtopic.php?f=76&t=116341
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+
+Gui, 1: NEW
+Gui, 1: Color, 010B43
+Gui, 1: Add, Text, cB4F0FF, This is the &1st Gui! 	 ; Ampersand (&) may be used in text to underline one of its letters.
+Gui, 1: Add, Edit, vEdit1
+Gui, 1: Show, y480 w200
+
+Gui, 2: NEW
+Gui, 2: Color, 0B4301
+Gui, 2: Add, Text, c97F660, This is the &2nd Gui!
+Gui, 2: Add, Edit, vEdit2
+Gui, 2: Show, x1060 y480 w200
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   Using... GuiControlGet:
+
+Gui, 2: Default 		 ; Sets the default gui, so any Gui commands will target this Gui.
+    GuiControlGet, Edit2
+Gui, 1: Default
+    GuiControlGet, Edit1
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   Using... Gui, Submit
+Gui, 1: Submit, NoHide
+Gui, 2: Submit, NoHide
+    Return
+
+1GuiClose: 		 ; This label called when the 1st Gui is closed.
+2GuiClose: 		 ; This label called when the 2nd Gui is closed.
+    Reload
