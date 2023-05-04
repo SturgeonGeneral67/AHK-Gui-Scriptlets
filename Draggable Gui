@@ -1,0 +1,36 @@
+#NoEnv
+SetBatchLines, -1 			 ; Use -1 to never sleep (i.e. have the script run at maximum speed).
+
+Gui, 
+    +AlwaysOnTop
+    -Caption 
+    +hwndHGUI 			 ; Allows a comment to appear on the same line as a command.
+    +LastFound
+Gui, Color, ABCDEF
+Gui, Font, s14 c123456, Calibri
+Gui, Margin, 15, 15
+Gui, Add, Text, w200 h100 Center +0x0200 0x00800000, Hello world! 	 ; 0x00800000 = Creates a thin-line border box.
+Gui, Font, s10
+
+Gui, Add, Text, x+15y+5,  Drag this Gui! 		; x+15y+5 / x+15 y+5 / y+5  <- Very differing results.
+
+Gui, Add, Text,  y+5, Anywhere you want.
+Gui, Add, Text, y+5, From any point in Gui..
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Gui Shaping  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+Gui, Show, Hide
+
+WinGetPos, X, Y, W, H
+R := Min(W, H) // 5 			 ; <<<<-----  Set value to amount of cornering. (0.5=Oval, 0=square, 1= capsule, 5=rounded corners).
+WinSet, Region, 0-0 W%W% H%H% R%R%-%R% 	  ; <<<<-----  Cornering math.
+
+Gui, Show
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Shaping End  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+OnMessage(0x0201, "WM_LBUTTONDOWN") 	 ; <<<<-----  Dragging Pt.1 after Gui Show command.
+
+Return
+
+WM_LBUTTONDOWN() { 			 ; <<<<-----  Dragging Pt.2 towards script end.
+   PostMessage, 0x00A1, 2, 0
+}
