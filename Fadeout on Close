@@ -1,0 +1,25 @@
+Gui, Destroy
+Gui, Margin, 0,0
+Gui,
+    +AlwaysOnTop
+    +LastFound
+    +E0x02000000 +E0x00080000 ; Double Buffer to reduce Gui redraw flicker.
+GUI_ID:=WinExist() 
+
+Gui, Font, s16 Bold, Calibri
+Gui, Add, Text, x+15 y+15 , This Is Text.
+Gui, Color, Blue
+
+Gui,Show,w400 h300 Hide, Animated Window ( Fade-In / Fade-Out )
+DllCall("AnimateWindow","UInt",GUI_ID,"Int",750,"UInt","0xa0000") ; Fade-in in (3/4 second).
+Return
+
+GuiEscape:
+GuiClose:
+    Gui,
+        +LastFound
+        -E0x02000000 -E0x00080000
+  DllCall("AnimateWindow","UInt",GUI_ID,"Int",1500,"UInt","0x90000") ; Fade-out in (1.5 seconds) on GUI Close.
+  ExitApp
+
+Return
