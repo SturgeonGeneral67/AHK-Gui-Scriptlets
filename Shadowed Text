@@ -1,0 +1,22 @@
+/*
+Two Similar Texts (with transparent background) can be overlapped (superimposed)
+one over the another (with a slight offset) to create an effect of shadowed text.
+These texts have to be colored in contrast with each other.
+*/
+
+^T:: 
+
+Text= ShadowDimension
+Gui, 
+    +AlwaysOnTop
+    -Caption
+    +Owner
+Gui, Margin, 10, 10
+Gui, Color, 676767
+
+Gui,Font, s18 w800 q5, Verdana
+Gui, Add,Text,x14 y14 Center vText1 c000000 BackgroundTrans, % Text 		 ; Text Shadow.
+Gui, Add,Text,x10 y10 Center vText2 cFFFFFF BackgroundTrans, % Text 		 ; Front facing text.
+
+Gui,Show, Y+555
+Return
