@@ -1,0 +1,26 @@
+Gui 
+   +AlwaysOnTop 
+   -DPIScale
+   +Resize
+   +HwndGuiHwnd 
+   
+Gui, Color, BLACK
+Gui, Margin, 10, 10
+Gui, Font, s16 w500 cBLUE
+
+Gui, Add, Text, vMyText, Text for example.
+Gui, Show, , Resizable GUI Window
+Return
+
+GuiSize:
+	GuiControlGet, pos , pos , MyText
+    ControlWidth := posW , ControlHeight := posH ;+ 26
+	VarSetCapacity( RECT , 16 , 0 ) ; https://www.autohotkey.com/boards/viewtopic.php?t=60924#p257561
+	DllCall( "user32\GetClientRect" , Ptr , GuiHwnd , Ptr , &RECT )
+	DllCall( "user32\ClientToScreen" , Ptr , GuiHwnd , Ptr , &RECT )
+	GuiWidth := NumGet( &RECT , 8 , "Int" )
+	GuiHeight := NumGet( &RECT , 12 , "Int" )
+    X := (GuiWidth - ControlWidth) / 2
+    Y := (GuiHeight - ControlHeight) / 2
+    GuiControl, Move,  MyText , x%X% y%Y%
+Return
