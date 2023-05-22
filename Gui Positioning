@@ -1,0 +1,199 @@
+
+/*
+
+Refresh Script … …	Ctrl + HOME key rapidly clicked 2 times.
+Exit Script … … … …	Ctrl + Escape key rapidly clicked 3 times.
+
+- Script Updater: Auto-reload script upon saved changes.
+  If you make any changes to the script file and save it, the script will automatically reload itself and continue running without manual intervention.
+
+*/
+
+; ==================================================
+; ================= Auto-Execute ===================
+; ==================================================
+#SingleInstance, Force
+#Persistent
+SetBatchLines -1
+DetectHiddenWindows, On
+SetTimer, UpdateCheck, 500 		 ; Checks for script changes every 1/2 second. (Script Updater)
+SetKeyDelay, 250 		 ; Sets the TapCount allowed delay time (milliseconds) for script Exit. (tied to Reload/Exit routine)
+
+Menu, Tray, Icon, wmploc.dll, 99 		 ; Local White Star tray Icon.
+; ===================================================
+; =============== Auto-Execute End ==================
+; ===================================================
+
+; … … … …  HOTKEY-TRIGGER … … … … … … … … … 
+^T:: 	 ; … …  (Ctrl + T) 
+  Gosub, IndicateDot1
+Gui, Color, LIME 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+; … … … … … … … … … … … … … … … … … … … …  
+; … … … … … … … … … … … … … … … … … … … … 
+
+; … … … … … Gui Example … … … … … 
+Gui,
+    +AlwaysOnTop 
+    -Caption 
+    +Owner 
+Gui, Color, B4F0FF
+Gui, Margin, 15, 15
+Gui, Font, s17 w600 c010B43
+Gui, Add, Text, CENTER, Basic Gui`nFor Testing
+Gui, Show
+
+; … … … … … POSITIONING … … … … … …
+
+; … … … … … Upper Left … … … … … …  
+;WinGetPos, X, Y, Width, Height, A
+;WinMove A, , 0+5, 0
+
+; … … … … … Upper Center … … … … … 
+;WinGetPos X, Y, Width, Height, A
+;CenterX := (A_ScreenWidth - Width) / 2
+;WinMove A, , %CenterX%, 0+5
+
+; … … … … … Upper Right … … … … … …  
+;WinGetPos, 0, 0, Width, Height, A
+;MaxX := A_ScreenWidth - Width - 5 ; This will put the Gui to the right of the monitor...adjust the "5" value as needed.
+;WinMove A, , %MaxX%, 0
+
+; … … … … … Center Left … … … … … …  
+;WinGetPos X, Y, Width, Height, A
+;CenterY := (A_ScreenHeight - Height) / 2
+;WinMove A, , 0+5, %CenterY%
+
+; … … … … … Center Center … … … … … 
+;WinGetPos, X, Y, Width, Height, A
+;MaxX := A_ScreenWidth - Width - 5 ; This will put the Gui to the right of the monitor...adjust the "5" value as needed.
+;MaxY := A_ScreenHeight - Height - 45 ; This will put the Gui above the taskbar...adjust the "45" value as needed.
+;WinMove, A, , (%MaxX% / 2) - (Width / 2), (%MaxY% / 2) - (Height / 2)
+
+; … … … … … Center Right … … … … … …  
+;WinGetPos X, Y, Width, Height, A
+;CenterY := (A_ScreenHeight - Height) / 2
+;MaxX := A_ScreenWidth - Width -5
+;WinMove A, , %MaxX%, %CenterY%
+
+; … … … … … Lower Left … … … … … …  
+;WinGetPos, X, Y, Width, Height, A
+;MaxY := A_ScreenHeight - Height - 45 ; This will put the Gui above the taskbar...adjust the "45" value as needed.
+;WinMove A, , 0, %MaxY%
+
+; … … … … … Lower Center … … … … …  
+;WinGetPos X, Y, Width, Height, A
+;CenterX := (A_ScreenWidth - Width) / 2
+;MaxY := A_ScreenHeight - Height -5
+;WinMove A, , %CenterX%, %MaxY%
+
+; … … … … … Lower Right … … … … … …  
+WinGetPos X, Y, Width, Height, A
+MaxX := A_ScreenWidth - Width - 5 ; This will put the Gui to the right of the monitor...adjust the "5" value as needed.
+MaxY := A_ScreenHeight - Height - 45 ; This will put the Gui above the taskbar...adjust the "45" value as needed.
+WinMove A, ,%MaxX%, %MaxY%
+
+
+; … … … … … Gui Example End … … … 
+Sleep, 5000
+Soundbeep, 1900, 500
+Gui, Destroy
+
+RETURN
+; ===================================================
+; =============== Reload/Exit Routine ===============
+; ===================================================
+RETURN
+
+; … … … …  RELOAD  SCRIPT  … … … … … … … … … … 
+
+^Home:: 		  ; … …  [Home Button]
+if (A_TimeSincePriorHotkey > 250) 
+{
+    TapCount := 1
+    KeyWait, Esc
+} else {
+    TapCount++
+    if (TapCount = 2) 	 ; <<<<---- Set TapCount to # of key taps wanted.
+    {
+  Gosub, IndicateDot1
+Gui, Color, YELLOW 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+        Reload
+} else {
+        KeyWait, Esc
+    }
+}
+Return
+
+; … … … …  EXIT SCRIPT  … … … … … … … … … … … 
+
+^Esc:: 		; … …  Ctrl + ((Esc) times (# of TapCounts))
+if (A_TimeSincePriorHotkey > 250) 
+{
+    TapCount := 1
+    KeyWait, Esc
+} else {
+    TapCount++
+    if (TapCount = 3) 	 ; <<<<---- Set TapCount to # of key taps wanted.
+    {
+  Gosub, IndicateDot1
+Gui, Color, RED 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+        Gui, Destroy
+        ExitApp
+} else {
+        KeyWait, Esc
+    }
+}
+Return
+
+; … … … …  Script Updater … … … … … … … … … …
+
+UpdateCheck: 				 ; Check if the script file has been modified.
+    oldModTime := currentModTime
+FileGetTime, currentModTime, %A_ScriptFullPath%
+
+; … … … … If the modification timestamp has changed, reload the script.
+    if  (oldModTime = currentModTime) Or (oldModTime = "")
+        Return
+  Gosub, IndicateDot1
+Gui, Color, BLUE 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+Reload
+
+; … … … …  SCRIPT GoSubs  … … … … … … … … … … 
+
+IndicateDot1:
+Gui, Destroy
+SysGet, MonitorWorkArea, MonitorWorkArea
+SysGet, TaskbarPos, 4
+Gui, +AlwaysOnTop -Caption +hwndHGUI +LastFound
+Return
+
+; … … … … … … … … … … … … … 
+
+IndicateDot2:
+Gui, Margin, 13, 13 		 ; <<<<-----Dot Size.
+Gui, Show, Hide
+WinGetPos, , , WinWidth, WinHeight, ahk_id %HGUI%
+NewX := MonitorWorkAreaRight - 80
+NewY := MonitorWorkAreaBottom - WinHeight - 5
+R := Min(WinWidth, WinHeight) // 1 	 ; <<<<-----  Set value of cornering. (0.5=Oval, 0=square, 1= round, 5=rounded corners).
+WinSet, Region, 0-0 W%WinWidth% H%WinHeight% R%R%-%R%
+Gui, Show, x%NewX% y%NewY%
+SoundGet, master_volume
+SoundSet, 7
+Soundbeep, 2100, 100
+SoundSet, % master_volume
+Sleep, 500
+Gui, Destroy
+Return
+
+; … … … … … … … … … … … … … … … … … … … … … 
+
+; ===================================================
+; ==================== Script End ===================
+; ===================================================
+
+/*
