@@ -1,0 +1,234 @@
+
+/*
+
+Refresh Script ......... Ctrl + HOME key rapidly clicked 2 times.
+Exit Script ................ Ctrl + Escape key rapidly clicked 3 times.
+
+- Script Updater: Auto-reload script upon saved changes.
+  If you make any changes to the script file and save it, the script will automatically reload itself and continue running without manual intervention.
+
+*/
+
+/*
+; = = = = = Gui Function Positions = = = = = 
+Left ............................ L
+Horizontal-Center ...... HC
+Right .......................... R
+Up ............................. U
+Vertical-Center .......... VC
+Down ........................ D
+Bottom ...................... B  (same as down)
+*/
+
+; = = = = = = = = = = = = = = = = = = 
+; = = = = = Auto-Execute = = = = = 
+; = = = = = = = = = = = = = = = = = = 
+#SingleInstance, Force
+#Persistent
+SetBatchLines -1
+DetectHiddenWindows, On
+SetTimer, UpdateCheck, 500 		 ; Checks for script changes every 1/2 second. (Script Updater)
+SetKeyDelay, 250 		 ; Sets the TapCount allowed delay time (milliseconds) for script Exit. (tied to Reload/Exit routine)
+
+Menu, Tray, Icon, wmploc.dll, 99 		 ; Local White Star tray Icon.
+; = = = = = = = = = = = = = = = = = = = = = 
+; = = = = = Auto-Execute End = = = = = 
+; = = = = = = = = = = = = = = = = = = = = = 
+
+; = = = = = HOTKEY-TRIGGER = = = = = 
+^T:: 	 ; … …  (Ctrl + T) 
+  Gosub, IndicateDot1
+Gui, Color, LIME 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+; = = = = = = = = = = = = = = = = = = = = = 
+
+
+
+; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+; = = = = = * How to use example * = = = = = 
+Gui, 
+    +AlwaysOnTop
+    -Caption 		 ; <<---- Adding -Caption adds 5-pixel edge to Gui.
+    +LastFound
+    +Owner 
+
+hwnd := WinExist()
+
+Gui, Color, B4F0FF
+Gui, Margin, 15, 15
+Gui, Font, s17 w600 c010B43
+Gui, Add, Text, CENTER, Basic Gui`nFor Testing
+Gui, Show, Hide 		 ; <<---- Gui Hide allows hidden window to be moved without showing it 1st.
+
+WinMove(hwnd,"L HC") 	 ; <<---- This is the nonant (9-section) postion for Gui appear. (left horizontal-center)
+Gui, Show, 		 ; <<---- Gui now shows in assigned position.
+
+; = = = = = 
+Sleep, 3500 		 ; <<----  Used for testing purposes.
+Soundbeep, 1700, 170 	 ; <<----    "    "		"    "
+Gui, Destroy 		 ; <<----    "    "		"    "
+Reload 			 ; <<----    "    "		"    "
+
+; = = = = = 
+; GuiClose: 		 ; <<---- Used if -Caption is commented out.
+;    Reload 			 ; <<----	 "    "		"    "
+;    ExitApp 		 ; <<----	 "    "		"    "
+
+; = = = = = = = = = = Options to move Gui at will. = = = = = = = = = = 
+; = = = = = = = = = Just remove commenter blocks = = = = = = = = = 
+; = = = = = ↓ ↓ = = = = for version wanted. = = = = ↓ ↓ = = = = = 
+ 
+; = = = = = Gui Position Function Options = = = = = 
+;          → → * Alphanumeric Number Keys * ← ←
+; 	____________________________
+; 	| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |
+; 	‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+;        Ctrl + (1-9)  ; <<<<----- Gui Move Hotkeys
+/*
+^1::WinMove(hwnd,"U L")   ; Up, Left
+^2::WinMove(hwnd,"U HC")   ; Up, Horizontal-Center
+^3::WinMove(hwnd,"U R")   ; Up, Right
+
+^4::WinMove(hwnd,"VC L")   ; Vertical-Center, Left
+^5::WinMove(hwnd,"VC HC")   ; Vertical-Center, Horizontal-Center
+^6::WinMove(hwnd,"VC r")   ; Vertical-Center, Right
+
+^7::WinMove(hwnd,"D L")   ; Down, Left
+^8::WinMove(hwnd,"D HC")   ; Down, Horizontal-Center
+^9::WinMove(hwnd,"D R")   ; Down, Right
+*/
+; = = = = = Gui Position Function Number Pad Options = = = = = 
+;     → → * Numpad Keys* ← ←
+; 	__________
+; 	| 7 | 8 | 9 |
+; 	| 4 | 5 | 6 |
+; 	| 1 | 2 | 3 |
+; 	‾‾‾‾‾‾‾‾‾‾
+;        Ctrl + (Numpad1-Numpad9)  ; <<<<----- Gui Move Hotkeys
+/*
+^Numpad7::WinMove(hwnd,"U L")   ; Up, Left
+^Numpad8::WinMove(hwnd,"U HC")   ; Up, Horizontal-Center
+^Numpad9::WinMove(hwnd,"U R")   ; Up, Right
+
+^Numpad4::WinMove(hwnd,"VC L")   ; Vertical-Center, Left
+^Numpad5::WinMove(hwnd,"VC HC")   ; Vertical-Center, Horizontal-Center
+^Numpad6::WinMove(hwnd,"VC r")   ; Vertical-Center, Right
+
+^Numpad1::WinMove(hwnd,"D L")   ; Down, Left
+^Numpad2::WinMove(hwnd,"D HC")   ; Down, Horizontal-Center
+^Numpad3::WinMove(hwnd,"D R")   ; Down, Right
+*/
+; = = = = ↑ = Gui Position Function Options End = ↑ = = = = 
+
+; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+
+; = = = = = Gui Position Function = = = = = 
+WinMove(hwnd,position) {   ; by Learning one
+; = = = = = Positions: L=Left, HC=Horizontal-Center, R=Right, 
+; = = = = = = = = = =   : U=Up, VC= Vertical-Center, D=Down, B=Bottom (same as down)
+   SysGet, Mon, MonitorWorkArea
+   oldDHW := A_DetectHiddenWindows
+   DetectHiddenWindows, On
+   WinGetPos,ix,iy,w,h, ahk_id %hwnd%
+   StringReplace,position,position,b,d,all
+   x := InStr(position,"l") ? MonLeft : InStr(position,"hc") ?  ((MonRight-w)/2): InStr(position,"r") ? MonRight - w : ix
+   y := InStr(position,"u") ? MonTop : InStr(position,"vc") ?  (MonBottom-h)/2 : InStr(position,"d") ? MonBottom - h : iy
+   WinMove, ahk_id %hwnd%,,x,y
+   DetectHiddenWindows, %oldDHW%
+}
+; = = = = = Gui Position Function End = = = = = 
+
+
+; = = = = = = = = = = = = = = = = = = = = = = 
+; = = = = = Reload/Exit Routine = = = = = 
+; = = = = = = = = = = = = = = = = = = = = = = 
+RETURN
+
+; = = = = = RELOAD  SCRIPT = = = = = 
+
+^Home:: 		 ; = = = = = Ctrl + [Home Button]
+if (A_TimeSincePriorHotkey > 250) 
+{
+    TapCount := 1
+    KeyWait, Esc
+} else {
+    TapCount++
+    if (TapCount = 2) 	 ; <<<<---- Set TapCount to # of key taps wanted.
+    {
+  Gosub, IndicateDot1
+Gui, Color, YELLOW 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+        Reload
+} else {
+        KeyWait, Esc
+    }
+}
+Return
+
+; = = = = = EXIT SCRIPT = = = = = 
+
+^Esc:: 		 ; = = = = = Ctrl + ((Esc) times (# of TapCounts))
+if (A_TimeSincePriorHotkey > 250) 
+{
+    TapCount := 1
+    KeyWait, Esc
+} else {
+    TapCount++
+    if (TapCount = 3) 	 ; <<<<---- Set TapCount to # of key taps wanted.
+    {
+  Gosub, IndicateDot1
+Gui, Color, RED 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+        Gui, Destroy
+        ExitApp
+} else {
+        KeyWait, Esc
+    }
+}
+Return
+
+; = = = = = Script Updater = = = = = 
+
+UpdateCheck: 				 ; Check if the script file has been modified.
+    oldModTime := currentModTime
+FileGetTime, currentModTime, %A_ScriptFullPath%
+    if  (oldModTime = currentModTime) Or (oldModTime = "") ; <<-- If modification timestamp changed, reload script.
+        Return
+  Gosub, IndicateDot1
+Gui, Color, BLUE 		 ; <<<<-----IndicateDot Color.
+  Gosub, IndicateDot2
+Reload
+
+; = = = = = SCRIPT GoSubs = = = = = 
+
+IndicateDot1:
+Gui, Destroy
+SysGet, MonitorWorkArea, MonitorWorkArea
+SysGet, TaskbarPos, 4
+Gui, +AlwaysOnTop -Caption +hwndHGUI +LastFound
+Return
+
+; = = = = = 
+
+IndicateDot2:
+Gui, Margin, 13, 13 		 ; <<<<-----Dot Size.
+Gui, Show, Hide
+WinGetPos, , , WinWidth, WinHeight, ahk_id %HGUI%
+NewX := MonitorWorkAreaRight - 80
+NewY := MonitorWorkAreaBottom - WinHeight - 5
+R := Min(WinWidth, WinHeight) // 1 	 ; <<<<-----  Set value of cornering. (0.5=Oval, 0=square, 1= round, 5=rounded corners).
+WinSet, Region, 0-0 W%WinWidth% H%WinHeight% R%R%-%R%
+Gui, Show, x%NewX% y%NewY%
+SoundGet, master_volume
+SoundSet, 4
+Soundbeep, 2100, 100
+SoundSet, % master_volume
+Sleep, 500
+Gui, Destroy
+Return
+
+; = = = = = = = = = = = = = = = = 
+; = = = = = Script End = = = = = 
+; = = = = = = = = = = = = = = = = 
