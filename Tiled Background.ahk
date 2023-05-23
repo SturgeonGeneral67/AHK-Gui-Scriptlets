@@ -1,4 +1,7 @@
-﻿
+; Tiled Background.ahk has included files...
+; BAT.png, BATblack.png, and Weathered.bmp
+; Background image must be .bmp file.
+
 ; = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
 #NoEnv ; Recommended for performance and future compatibility.
 #Persistent ; Keeps a script permanently running until user closes it or ExitApp is encountered.
